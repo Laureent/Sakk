@@ -1,4 +1,5 @@
 ﻿using System;
+using Sakk;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,10 +15,15 @@ namespace Sakk
     {
         public Form1()
         {
-            InitializeComponent();
+            tablaGeneralas sakktabla = new tablaGeneralas(); 
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void propertyGrid1_Click(object sender, EventArgs e)
         {
 
         }

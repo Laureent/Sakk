@@ -8,40 +8,35 @@ namespace Sakk
 {
     public class tablaGeneralas
     {
+        const int tablameret = 8;
+        public Mező[,] tabla { get; set; }
+
         public tablaGeneralas()
         {
-            const int tablameret = 8;
-            int[,] tabla = new int[8, 8]{
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0},
-                };
+            //tábla legenerálása
+            tabla = new Mező[tablameret, tablameret];
+
             for (int i = 0; i < tablameret; i++)
             {
                 for (int h = 0; h < tablameret; h++)
                 {
-                    tabla[i,h] = 0;
+                    tabla[i,h] = new Mező(i,h);
+                }
+            }
+        }
+
+        //bábu lépés szabályok
+        public void BabuLepesek(Mező bábuHelyzete, string bábuNév)
+        {
+            for (int i = 0; i < tablameret; i++)
+            {
+                for (int h = 0; h < tablameret; h++)
+                {
+                    tabla[i, h].lepesek = false;
+                    tabla[i, h].foglalt = false;
                 }
             }
 
-           
-            
-            Babuk alapHelyzet = new Babuk();
-            for (int i = 0; i < tablameret; i++)
-            {
-                for (int h = 0; h < tablameret; h++)
-                {
-                    if ()
-                    {
-                        
-                    }
-                }
-            }
         }
     }
 }

@@ -1,0 +1,4 @@
+C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.csprojAssemblyReference.cache
+C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.Form1.resources
+C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.Properties.Resources.resources
+C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.csproj.GenerateResource.cache
