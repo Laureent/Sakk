@@ -10,7 +10,7 @@ namespace Sakk
     public class tablaGeneralas
     {
         const int tablameret = 8;
-        public Mező[,] tabla { get; set; }
+        static public Mező[,] tabla { get; set; }
 
         public tablaGeneralas()
         {
