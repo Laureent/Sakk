@@ -12,8 +12,10 @@ namespace Sakk
         public bool foglalt { get; set; }
         public int oszlop { get; set; }
         public int sor { get; set; }
+        public string babuNeve { get; set; }
+		public string babuSzine { get; set; }
 
-        public Mező(int sor, int oszlop)
+		public Mező(int sor, int oszlop)
         {
             this.sor = sor;
             this.oszlop = oszlop;
