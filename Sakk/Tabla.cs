@@ -15,9 +15,9 @@ namespace Sakk
         public BabuSzine kovetkezoSzin { get; set; }      
         public bool jatekVege { get; set; }
 
+        //tábla legenerálása
         public Tabla(int tablameret)
         {
-            //tábla legenerálása
             tabla = new Mezo[tablameret, tablameret];
             int gombMeret = 70;
 
@@ -31,7 +31,7 @@ namespace Sakk
                 }
             }
         }
-        
+        //bábu kiválasztása vagy léptetése
         public void GombNyomas(Mezo mezo)
         {
             if (mezo.foglalt && !mezo.lepesek && kovetkezoSzin == mezo.babuSzine)
@@ -71,6 +71,7 @@ namespace Sakk
         {
             return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan.babuNeve == "Király";
         }
+        //bábu léptetése
         public void Lepes(Mezo honnan, Mezo hova)
         {
 			if (FeherFelfeleSancolt(honnan, hova))
@@ -109,8 +110,6 @@ namespace Sakk
                 jatekVege = true;
             }
         }
-        
-        //0,3 7,3
         public bool FeherFelfeleTudSancolni()
         {
             return tabla[0, 3].babuNeve == "Király" && tabla[0, 3].babuSzine == BabuSzine.FEHER && tabla[0, 3].lepesekSzama == 0 && tabla[0, 0].babuNeve == "Bástya" && tabla[0, 0].lepesekSzama == 0 && tabla[0, 0].babuSzine == BabuSzine.FEHER && !tabla[0, 1].foglalt && !tabla[0, 2].foglalt;
@@ -127,6 +126,7 @@ namespace Sakk
         {
             return tabla[7, 3].babuNeve == "Király" && tabla[7, 3].babuSzine == BabuSzine.FEKETE && tabla[7, 3].lepesekSzama == 0 && tabla[7, 7].babuNeve == "Bástya" && tabla[7, 7].lepesekSzama == 0 && tabla[7, 7].babuSzine == BabuSzine.FEKETE && !tabla[7, 4].foglalt && !tabla[7, 5].foglalt && !tabla[7, 6].foglalt;
         }
+        //előzőleg kijelölt területek törlése
         public void LehetosegekTorlese()
         {
             for (int i = 0; i < tabla.GetLength(0); i++)
@@ -137,6 +137,7 @@ namespace Sakk
                 }
             }
         }
+        //azoknak a mezőkek a kijelölése ahová léphet a bábu
         public void lepesiLehetoseg(Mezo cel, Mezo start) 
         {
             if ((cel.foglalt && cel.babuSzine != start.babuSzine) || !cel.foglalt)
@@ -144,6 +145,7 @@ namespace Sakk
                 tabla[cel.oszlop, cel.sor].lepesek = true;
             }
         }
+        //bábuk lépés szabályai
         public void LehetosegekBeallitasa(Mezo babuHelyzete, string babuNev)
         {
             int seged = 1;
@@ -193,6 +195,7 @@ namespace Sakk
                     break;
 
                 case "Király":
+                    //rosálás ha lehetséges
 					if (FeherFelfeleTudSancolni())
 					{
                         tabla[0, 1].lepesek = true;	
@@ -616,7 +619,6 @@ namespace Sakk
                                     lepesiLehetoseg(tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor], babuHelyzete);
                                 }
                                 lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor], babuHelyzete);
-                                //jobbra előre, legelső feltételt az összesnél meg kell csinálni
                                 if (babuHelyzete.sor - 1 > -1 && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].foglalt)
                                 {
                                     lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1], babuHelyzete);
@@ -658,186 +660,95 @@ namespace Sakk
             tabla[0, 0].babuNeve = "Bástya";
             tabla[0, 0].babuSzine = BabuSzine.FEHER;
 
-
-
-
-           tabla[0, 1].babuNeve = "Ló";
+            tabla[0, 1].babuNeve = "Ló";
             tabla[0, 1].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[0, 2].babuNeve = "Futó";
             tabla[0, 2].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[0, 3].babuNeve = "Király";
             tabla[0, 3].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[0, 4].babuNeve = "Királynő";
             tabla[0, 4].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[0, 5].babuNeve = "Futó";
             tabla[0, 5].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[0, 6].babuNeve = "Ló";
             tabla[0, 6].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[0, 7].babuNeve = "Bástya";
             tabla[0, 7].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[1, 0].babuNeve = "Paraszt";
             tabla[1, 0].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[1, 1].babuNeve = "Paraszt";
             tabla[1, 1].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[1, 2].babuNeve = "Paraszt";
             tabla[1, 2].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[1, 3].babuNeve = "Paraszt";
             tabla[1, 3].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[1, 4].babuNeve = "Paraszt";
             tabla[1, 4].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[1, 5].babuNeve = "Paraszt";
             tabla[1, 5].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[1, 6].babuNeve = "Paraszt";
             tabla[1, 6].babuSzine = BabuSzine.FEHER;
 
-
-
-
             tabla[1, 7].babuNeve = "Paraszt";
             tabla[1, 7].babuSzine = BabuSzine.FEHER;
-
-
-
 
             tabla[7, 0].babuNeve = "Bástya";
             tabla[7, 0].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[7, 1].babuNeve = "Ló";
             tabla[7, 1].babuSzine = BabuSzine.FEKETE;
-
-
-
 
             tabla[7, 2].babuNeve = "Futó";
             tabla[7, 2].babuSzine = BabuSzine.FEKETE;
 
-
-
             tabla[7, 3].babuNeve = "Király";
             tabla[7, 3].babuSzine = BabuSzine.FEKETE;
-
-
-
 
             tabla[7, 4].babuNeve = "Királynő";
             tabla[7, 4].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[7, 5].babuNeve = "Futó";
             tabla[7, 5].babuSzine = BabuSzine.FEKETE;
-
-
-
 
             tabla[7, 6].babuNeve = "Ló";
             tabla[7, 6].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[7, 7].babuNeve = "Bástya";
             tabla[7, 7].babuSzine = BabuSzine.FEKETE;
-
-
 
             tabla[6, 0].babuNeve = "Paraszt";
             tabla[6, 0].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[6, 1].babuNeve = "Paraszt";
             tabla[6, 1].babuSzine = BabuSzine.FEKETE;
-
-
-
 
             tabla[6, 2].babuNeve = "Paraszt";
             tabla[6, 2].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[6, 3].babuNeve = "Paraszt";
             tabla[6, 3].babuSzine = BabuSzine.FEKETE;
-
-
-
 
             tabla[6, 4].babuNeve = "Paraszt";
             tabla[6, 4].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[6, 5].babuNeve = "Paraszt";
             tabla[6, 5].babuSzine = BabuSzine.FEKETE;
 
-
-
-
             tabla[6, 6].babuNeve = "Paraszt";
             tabla[6, 6].babuSzine = BabuSzine.FEKETE;
-
-
-
 
             tabla[6, 7].babuNeve = "Paraszt";
             tabla[6, 7].babuSzine = BabuSzine.FEKETE;
