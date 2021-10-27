@@ -16,6 +16,5 @@ C:\Users\padar\Desktop\suli\OKJ Asztal-, mobilalkalmazasok\Sakk\Sakk\Sakk\obj\De
 C:\Users\loka9\Desktop\Sakk\Sakk\bin\Debug\Sakk.exe.config
 C:\Users\loka9\Desktop\Sakk\Sakk\bin\Debug\Sakk.exe
 C:\Users\loka9\Desktop\Sakk\Sakk\bin\Debug\Sakk.pdb
-C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.tablaGeneralas.resources
 C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.exe
 C:\Users\loka9\Desktop\Sakk\Sakk\obj\Debug\Sakk.pdb

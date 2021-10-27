@@ -53,9 +53,7 @@ namespace Sakk
             ujMezo.babuNeve = honnan.babuNeve;
             ujMezo.babuSzine = honnan.babuSzine;
             ujMezo.lepesek = false;
-            //ujMezo.gomb.Location = hova.gomb.Location;
             Mezo regiMezo = new Mezo(honnan.sor, honnan.oszlop);
-            //gomb.Location = honnan.gomb.Location;
             tabla[ujMezo.oszlop, ujMezo.sor] = ujMezo;
             tabla[regiMezo.oszlop, regiMezo.sor] = regiMezo;
             LehetosegekTorlese();
@@ -77,10 +75,15 @@ namespace Sakk
                 tabla[cel.oszlop, cel.sor].lepesek = true;
             }
         }
+        public void kiralynoLepesiLehetoseg(Mezo cel, Mezo start)
+        {
+
+        }
         public void LehetosegekBeallitasa(Mezo babuHelyzete, string babuNev)
         {
+            int seged = 1;
             switch (babuNev)
-            {
+            {                                   
                 case "Ló":
                     //felfele balra
                     if (babuHelyzete.sor - 2 > -1 && babuHelyzete.oszlop - 1 > -1)
@@ -101,7 +104,6 @@ namespace Sakk
                     if (babuHelyzete.sor + 1 < 8 && babuHelyzete.oszlop + 2 < 8)
                     {
                         lepesiLehetoseg(tabla[babuHelyzete.oszlop + 2, babuHelyzete.sor + 1], babuHelyzete);
-
                     }
                     //balra fel
                     if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop - 2 > -1)
@@ -124,11 +126,441 @@ namespace Sakk
                         lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 2], babuHelyzete);
                     }
                     break;
+
+                case "Király":
+                    //felfelé
+                    if (babuHelyzete.sor - 1 > -1)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor - 1], babuHelyzete);
+                    }
+                    //felfelé jobbra
+                    if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop + 1 < 8)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1], babuHelyzete);
+                    }
+                    //felfelé balra
+                    if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop - 1 > -1)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1], babuHelyzete);
+                    }
+                    //jobbra
+                    if (babuHelyzete.oszlop + 1 < 8)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor], babuHelyzete);
+                    }
+                    //balra
+                    if (babuHelyzete.oszlop - 1 > -1)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor], babuHelyzete);
+                    }
+                    //lefelé
+                    if (babuHelyzete.sor + 1 < 8)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor + 1], babuHelyzete);
+                    }
+                    //lefelé jobbra
+                    if (babuHelyzete.oszlop + 1 < 8 && babuHelyzete.sor + 1 < 8)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1], babuHelyzete);
+                    }
+                    //lefelé balra
+                    if (babuHelyzete.oszlop - 1 > -1 && babuHelyzete.sor + 1 < 8)
+                    {
+                        lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1], babuHelyzete);
+                    }
+                    break;
+
+                case "Királynő":
+                    //felfelé
+                        while (babuHelyzete.sor - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged], babuHelyzete);                               
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //lefelé
+                        while (babuHelyzete.sor + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //jobbra
+                        while (babuHelyzete.oszlop + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //balra
+                        while (babuHelyzete.oszlop - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //felfelé jobbra
+                        while (babuHelyzete.oszlop + seged < 8 && babuHelyzete.sor - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged], babuHelyzete);
+                                    break;
+                                }
+                                break;  
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged], babuHelyzete);
+                            }                            
+                            seged++;
+                        }
+                    seged = 1;
+                    //felfelé balra
+                        while (babuHelyzete.oszlop - seged > -1 && babuHelyzete.sor - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //lefelé jobbra
+                        while (babuHelyzete.oszlop + seged < 8 && babuHelyzete.sor + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //lefelé balra
+                        while (babuHelyzete.oszlop - seged > -1 && babuHelyzete.sor + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    break;
+
+                case "Futó":
+                    //felfelé jobbra
+                        while (babuHelyzete.oszlop + seged < 8 && babuHelyzete.sor - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor - seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //felfelé balra
+                        while (babuHelyzete.oszlop - seged > -1 && babuHelyzete.sor - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor - seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //lefelé jobbra
+                        while (babuHelyzete.oszlop + seged < 8 && babuHelyzete.sor + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor + seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //lefelé balra
+                        while (babuHelyzete.oszlop - seged > -1 && babuHelyzete.sor + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor + seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    break;
+
+                case "Bástya":
+                    //felfelé
+                        while (babuHelyzete.sor - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //lefelé
+                        while (babuHelyzete.sor + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop, babuHelyzete.sor + seged], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //jobbra
+                        while (babuHelyzete.oszlop + seged < 8)
+                        {
+                            if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    //balra
+                        while (babuHelyzete.oszlop - seged > -1)
+                        {
+                            if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor].foglalt)
+                            {
+                                if (tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor], babuHelyzete);
+                                    break;
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor], babuHelyzete);
+                            }
+                            seged++;
+                        }
+                    seged = 1;
+                    break;
+                    
+                case "Paraszt":
+                    //fehér
+                    if (tabla[babuHelyzete.oszlop,babuHelyzete.sor].babuSzine == "Fehér")
+                    {
+                        if (babuHelyzete.oszlop + 1 < 8)
+                        {
+                            if (!tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor], babuHelyzete);
+                                if (tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1], babuHelyzete);
+                                }
+                                if (tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1], babuHelyzete);
+                                }
+                            }
+                            else if(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor -1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].foglalt)
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1], babuHelyzete);
+                                if (tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1], babuHelyzete);
+                                }
+                            }
+                            else if (tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].foglalt)
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1], babuHelyzete);
+                                if (tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1], babuHelyzete);
+                                }
+                            }                           
+                        }
+                    }
+                    //fekete
+                    if (tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine == "Fekete")
+                    {
+                        if (babuHelyzete.oszlop - 1 > -1)
+                        {
+                            if (!tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor].foglalt)
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor], babuHelyzete);
+                                if (tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1], babuHelyzete);
+                                }
+                                if (tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1], babuHelyzete);
+                                }
+                            }
+                            else if (tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].foglalt)
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1], babuHelyzete);
+                                if (tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1], babuHelyzete);
+                                }
+                            }
+                            else if (tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].foglalt)
+                            {
+                                lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1], babuHelyzete);
+                                if (tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].babuSzine != tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine && tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].foglalt)
+                                {
+                                    lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1], babuHelyzete);
+                                }
+                            }
+                        }
+                    }
+                    break;
+
                 default:
                     break;
             }
         }
-
+        //tábla alaphelyzet
         public void jatekInditasa()
         {
 
@@ -139,14 +571,92 @@ namespace Sakk
 
 
 
-            tabla[4, 3].babuNeve = "Ló";
-            tabla[4, 3].babuSzine = "Fehér";
+            tabla[0, 1].babuNeve = "Ló";
+            tabla[0, 1].babuSzine = "Fehér";
 
 
 
 
             tabla[0, 2].babuNeve = "Futó";
             tabla[0, 2].babuSzine = "Fehér";
+
+
+
+
+            tabla[0, 3].babuNeve = "Király";
+            tabla[0, 3].babuSzine = "Fehér";
+
+
+
+
+            tabla[0, 4].babuNeve = "Királynő";
+            tabla[0, 4].babuSzine = "Fehér";
+
+
+
+
+            tabla[0, 5].babuNeve = "Futó";
+            tabla[0, 5].babuSzine = "Fehér";
+
+
+
+
+            tabla[0, 6].babuNeve = "Ló";
+            tabla[0, 6].babuSzine = "Fehér";
+
+
+
+
+            tabla[0, 7].babuNeve = "Bástya";
+            tabla[0, 7].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 0].babuNeve = "Paraszt";
+            tabla[1, 0].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 1].babuNeve = "Paraszt";
+            tabla[1, 1].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 2].babuNeve = "Paraszt";
+            tabla[1, 2].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 3].babuNeve = "Paraszt";
+            tabla[1, 3].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 4].babuNeve = "Paraszt";
+            tabla[1, 4].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 5].babuNeve = "Paraszt";
+            tabla[1, 5].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 6].babuNeve = "Paraszt";
+            tabla[1, 6].babuSzine = "Fehér";
+
+
+
+
+            tabla[1, 7].babuNeve = "Paraszt";
+            tabla[1, 7].babuSzine = "Fehér";
 
 
 
@@ -166,6 +676,81 @@ namespace Sakk
             tabla[7, 2].babuNeve = "Futó";
             tabla[7, 2].babuSzine = "Fekete";
 
+
+
+            tabla[7, 3].babuNeve = "Király";
+            tabla[7, 3].babuSzine = "Fekete";
+
+
+
+
+            tabla[7, 4].babuNeve = "Királynő";
+            tabla[7, 4].babuSzine = "Fekete";
+
+
+
+
+            tabla[7, 5].babuNeve = "Futó";
+            tabla[7, 5].babuSzine = "Fekete";
+
+
+
+
+            tabla[7, 6].babuNeve = "Ló";
+            tabla[7, 6].babuSzine = "Fekete";
+
+
+
+
+            tabla[7, 7].babuNeve = "Bástya";
+            tabla[7, 7].babuSzine = "Fekete";
+
+
+
+            tabla[6, 0].babuNeve = "Paraszt";
+            tabla[6, 0].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 1].babuNeve = "Paraszt";
+            tabla[6, 1].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 2].babuNeve = "Paraszt";
+            tabla[6, 2].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 3].babuNeve = "Paraszt";
+            tabla[6, 3].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 4].babuNeve = "Paraszt";
+            tabla[6, 4].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 5].babuNeve = "Paraszt";
+            tabla[6, 5].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 6].babuNeve = "Paraszt";
+            tabla[6, 6].babuSzine = "Fekete";
+
+
+
+
+            tabla[6, 7].babuNeve = "Paraszt";
+            tabla[6, 7].babuSzine = "Fekete";
         }
     }
 }
