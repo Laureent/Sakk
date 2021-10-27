@@ -39,10 +39,11 @@ namespace Sakk
             sakkTabla.GombNyomas(mezo);
             panelModositas();
         }
-
+        
         private void panelModositas()
         {
             panel1.Controls.Clear();
+
             for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
             {
                 for (int h = 0; h < sakkTabla.tabla.GetLength(1); h++)
@@ -51,11 +52,11 @@ namespace Sakk
                     {
                         sakkTabla.tabla[i, h].gomb.BackColor = Color.Gray;
                     }
-                    else if (sakkTabla.tabla[i, h].babuSzine == "Fehér")
+                    else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEHER)
                     {
                         sakkTabla.tabla[i, h].gomb.BackColor = Color.White;
                     }
-                    else if (sakkTabla.tabla[i, h].babuSzine == "Fekete")
+                    else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEKETE)
                     {
                         sakkTabla.tabla[i, h].gomb.BackColor = Color.Black;
                         sakkTabla.tabla[i, h].gomb.ForeColor = Color.White;
@@ -70,14 +71,27 @@ namespace Sakk
                     sakkTabla.tabla[i, h].gomb.Width = 70;
                     sakkTabla.tabla[i, h].gomb.Click -= GombNyomas;
                     sakkTabla.tabla[i, h].gomb.Click += GombNyomas;
+					if (sakkTabla.jatekVege)
+					{
+                        sakkTabla.tabla[i, h].gomb.Enabled = false;
+                    }
                     panel1.Controls.Add(sakkTabla.tabla[i, h].gomb);
-                    
                 }
+            }
+            if (sakkTabla.kovetkezoSzin == BabuSzine.FEHER)
+            {
+                label1.Text = "Fehér játékos következik";
+            }
+            else
+            {
+                label1.Text = "Fekete játékos következik";
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            sakkTabla = new Tabla(8);            
+            panel1.Controls.Clear();
             sakkTabla.jatekInditasa();
             panelModositas();
         }

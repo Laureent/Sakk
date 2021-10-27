@@ -21,14 +21,16 @@ namespace Sakk
         public int oszlop { get; set; }
         public int sor { get; set; }
         public string babuNeve { get; set; }
-		public string babuSzine { get; set; }
+		public BabuSzine babuSzine { get; set; }
 		public Button gomb { get; set; }
+		public int lepesekSzama { get; set; }
 
-		public Mezo(int sor, int oszlop)
+        public Mezo(int sor, int oszlop)
         {
             this.sor = sor;
             this.oszlop = oszlop;
             this.gomb = new Button();
+            lepesekSzama = 0;
         }
     }
 }
