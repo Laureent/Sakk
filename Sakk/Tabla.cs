@@ -56,19 +56,19 @@ namespace Sakk
         }
         private bool FeherFelfeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 1 && hova.oszlop == 0 && honnan.babuNeve == "Király";
+            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 1 && hova.oszlop == 0 && honnan.IsType(typeof(Kiraly));
         }
         private bool FeherLefeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 5 && hova.oszlop == 0 && honnan.babuNeve == "Király";
+            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 5 && hova.oszlop == 0 && honnan.IsType(typeof(Kiraly));
         }
         private bool FeketeFelfeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 1 && hova.oszlop == 7 && honnan.babuNeve == "Király";
+            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 1 && hova.oszlop == 7 && honnan.IsType(typeof(Kiraly));
         }
         private bool FeketeLefeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan.babuNeve == "Király";
+            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan.IsType(typeof(Kiraly));
         }
         //bábu léptetése
         public void Lepes(Mezo honnan, Mezo hova)
@@ -129,19 +129,19 @@ namespace Sakk
         }
         public bool FeherFelfeleTudSancolni()
         {
-            return tabla[0, 3].babuNeve == "Király" && tabla[0, 3].babuSzine == BabuSzine.FEHER && tabla[0, 3].lepesekSzama == 0 && tabla[0, 0].babuNeve == "Bástya" && tabla[0, 0].lepesekSzama == 0 && tabla[0, 0].babuSzine == BabuSzine.FEHER && !tabla[0, 1].foglalt && !tabla[0, 2].foglalt;
+            return tabla[0, 3].IsType(typeof(Kiraly)) && tabla[0, 3].babuFeher && tabla[0, 3].lepesekSzama == 0 && tabla[0, 0].IsType(typeof(Bastya)) && tabla[0, 0].lepesekSzama == 0 && tabla[0, 0].babuSzine == BabuSzine.FEHER && !tabla[0, 1].foglalt && !tabla[0, 2].foglalt;
         }
         public bool FeherLefeleTudSancolni()
         {
-            return tabla[0, 3].babuNeve == "Király" && tabla[0, 3].babuSzine == BabuSzine.FEHER && tabla[0, 3].lepesekSzama == 0 && tabla[0, 7].babuNeve == "Bástya" && tabla[0, 7].lepesekSzama == 0 && tabla[0, 7].babuSzine == BabuSzine.FEHER && !tabla[0, 4].foglalt && !tabla[0, 5].foglalt && !tabla[0, 6].foglalt; 
+            return tabla[0, 3].IsType(typeof(Kiraly)) && tabla[0, 3].babuFeher && tabla[0, 3].lepesekSzama == 0 && tabla[0, 7].IsType(typeof(Bastya)) && tabla[0, 7].lepesekSzama == 0 && tabla[0, 7].babuSzine == BabuSzine.FEHER && !tabla[0, 4].foglalt && !tabla[0, 5].foglalt && !tabla[0, 6].foglalt; 
         }
         public bool FeketeFelfeleTudSancolni()
         {
-            return tabla[7, 3].babuNeve == "Király" && tabla[7, 3].babuSzine == BabuSzine.FEKETE && tabla[7, 3].lepesekSzama == 0 && tabla[7, 0].babuNeve == "Bástya" && tabla[7, 0].lepesekSzama == 0 && tabla[7, 0].babuSzine == BabuSzine.FEKETE && !tabla[7, 1].foglalt && !tabla[7, 2].foglalt;
+            return tabla[7, 3].IsType(typeof(Kiraly)) && tabla[7, 3].babuFekete && tabla[7, 3].lepesekSzama == 0 && tabla[7, 0].IsType(typeof(Bastya)) && tabla[7, 0].lepesekSzama == 0 && tabla[7, 0].babuSzine == BabuSzine.FEKETE && !tabla[7, 1].foglalt && !tabla[7, 2].foglalt;
         }
         public bool FeketeLefeleTudSancolni()
         {
-            return tabla[7, 3].babuNeve == "Király" && tabla[7, 3].babuSzine == BabuSzine.FEKETE && tabla[7, 3].lepesekSzama == 0 && tabla[7, 7].babuNeve == "Bástya" && tabla[7, 7].lepesekSzama == 0 && tabla[7, 7].babuSzine == BabuSzine.FEKETE && !tabla[7, 4].foglalt && !tabla[7, 5].foglalt && !tabla[7, 6].foglalt;
+            return tabla[7, 3].IsType(typeof(Kiraly)) && tabla[7, 3].babuFekete && tabla[7, 3].lepesekSzama == 0 && tabla[7, 7].IsType(typeof(Bastya)) && tabla[7, 7].lepesekSzama == 0 && tabla[7, 7].babuSzine == BabuSzine.FEKETE && !tabla[7, 4].foglalt && !tabla[7, 5].foglalt && !tabla[7, 6].foglalt;
         }
         //előzőleg kijelölt területek törlése
         public void LehetosegekTorlese()
@@ -588,7 +588,7 @@ namespace Sakk
                     
                 case "Paraszt":
                     //fehér
-                    if (tabla[babuHelyzete.oszlop,babuHelyzete.sor].babuSzine == BabuSzine.FEHER)
+                    if (tabla[babuHelyzete.oszlop,babuHelyzete.sor].babuFeher)
                     {
                         if (babuHelyzete.oszlop + 1 < 8)
                         {
@@ -627,7 +627,7 @@ namespace Sakk
                         }
                     }
                     //fekete
-                    if (tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuSzine == BabuSzine.FEKETE)
+                    if (tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFekete)
                     {
                         if (babuHelyzete.oszlop - 1 > -1)
                         {

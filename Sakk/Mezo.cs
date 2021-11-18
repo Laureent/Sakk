@@ -20,9 +20,9 @@ namespace Sakk
 		public BabuSzine babuSzine { get; set; }
         public bool babuFekete { get => babuSzine == BabuSzine.FEKETE && !IsType(typeof(Mezo)); }
         public bool babuFeher { get => babuSzine == BabuSzine.FEHER && !IsType(typeof(Mezo)); }
-        public bool nemLepettMeg { get => lepesekSzama == 0; }
+        //public bool nemLepettMeg { get => lepesekSzama == 0; }
         public Button gomb { get; set; }
-		public int lepesekSzama { get; set; }
+		//public int lepesekSzama { get; set; }
         public bool changed { get; private set; }
 
         public Mezo(int sor, int oszlop)
@@ -30,7 +30,7 @@ namespace Sakk
             this.sor = sor;
             this.oszlop = oszlop;
             gomb = new Button();
-            lepesekSzama = 0;
+            //lepesekSzama = 0;
             changed = true;
         }
 
