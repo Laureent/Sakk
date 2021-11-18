@@ -42,40 +42,44 @@ namespace Sakk
         
         private void panelModositas()
         {
-            panel1.Controls.Clear();
+            //panel1.Controls.Clear();
 
             for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
             {
                 for (int h = 0; h < sakkTabla.tabla.GetLength(1); h++)
                 {
-                    if (sakkTabla.tabla[i, h].lepesek && !sakkTabla.tabla[i, h].foglalt)
-                    {
-                        sakkTabla.tabla[i, h].gomb.BackColor = Color.Gray;
-                    }
-                    else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEHER)
-                    {
-                        sakkTabla.tabla[i, h].gomb.BackColor = Color.White;
-                    }
-                    else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEKETE)
-                    {
-                        sakkTabla.tabla[i, h].gomb.BackColor = Color.Black;
-                        sakkTabla.tabla[i, h].gomb.ForeColor = Color.White;
-                    }
-                    else if (!sakkTabla.tabla[i, h].lepesek)
-                    {
-                        sakkTabla.tabla[i, h].gomb.BackColor = default(Color);
-                    }
-                    sakkTabla.tabla[i, h].gomb.Location = new Point(i * 70, h * 70);
-                    sakkTabla.tabla[i, h].gomb.Text = sakkTabla.tabla[i, h].babuNeve;
-                    sakkTabla.tabla[i, h].gomb.Height = 70;
-                    sakkTabla.tabla[i, h].gomb.Width = 70;
-                    sakkTabla.tabla[i, h].gomb.Click -= GombNyomas;
-                    sakkTabla.tabla[i, h].gomb.Click += GombNyomas;
-					if (sakkTabla.jatekVege)
+					if (sakkTabla.tabla[i, h].changed)
 					{
-                        sakkTabla.tabla[i, h].gomb.Enabled = false;
+                        if (sakkTabla.tabla[i, h].lepesek && !sakkTabla.tabla[i, h].foglalt)
+                        {
+                            sakkTabla.tabla[i, h].gomb.BackColor = Color.Gray;
+                        }
+                        else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEHER)
+                        {
+                            sakkTabla.tabla[i, h].gomb.BackColor = Color.White;
+                        }
+                        else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEKETE)
+                        {
+                            sakkTabla.tabla[i, h].gomb.BackColor = Color.Black;
+                            sakkTabla.tabla[i, h].gomb.ForeColor = Color.White;
+                        }
+                        else if (!sakkTabla.tabla[i, h].lepesek)
+                        {
+                            sakkTabla.tabla[i, h].gomb.BackColor = default(Color);
+                        }
+                        sakkTabla.tabla[i, h].gomb.Location = new Point(i * 70, h * 70);
+                        sakkTabla.tabla[i, h].gomb.Text = sakkTabla.tabla[i, h].babuNeve;
+                        sakkTabla.tabla[i, h].gomb.Height = 70;
+                        sakkTabla.tabla[i, h].gomb.Width = 70;
+                        sakkTabla.tabla[i, h].gomb.Click -= GombNyomas;
+                        sakkTabla.tabla[i, h].gomb.Click += GombNyomas;
+                        if (sakkTabla.jatekVege)
+                        {
+                            sakkTabla.tabla[i, h].gomb.Enabled = false;
+                        }
+                        panel1.Controls.Add(sakkTabla.tabla[i, h].gomb);
+                        sakkTabla.tabla[i, h].clearChanged();
                     }
-                    panel1.Controls.Add(sakkTabla.tabla[i, h].gomb);
                 }
             }
             if (sakkTabla.kovetkezoSzin == BabuSzine.FEHER)
