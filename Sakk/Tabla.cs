@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sakk.Babuk;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -56,19 +57,19 @@ namespace Sakk
         }
         private bool FeherFelfeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 1 && hova.oszlop == 0 && honnan.IsType(typeof(Kiraly));
+            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 1 && hova.oszlop == 0 && honnan is Kiraly;
         }
         private bool FeherLefeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 5 && hova.oszlop == 0 && honnan.IsType(typeof(Kiraly));
+            return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 5 && hova.oszlop == 0 && honnan is Kiraly;
         }
         private bool FeketeFelfeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 1 && hova.oszlop == 7 && honnan.IsType(typeof(Kiraly));
+            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 1 && hova.oszlop == 7 && honnan is Kiraly;
         }
         private bool FeketeLefeleSancolt(Mezo honnan, Mezo hova)
         {
-            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan.IsType(typeof(Kiraly));
+            return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan is Kiraly;
         }
         //bábu léptetése
         public void Lepes(Mezo honnan, Mezo hova)
@@ -98,7 +99,6 @@ namespace Sakk
                 hova = new Mezo(honnanSor, honnanOszlop);
                 hova.setChanged();
                 honnan.setChanged();
-                honnan.lepesekSzama++;
                 tabla[honnan.oszlop, honnan.sor] = honnan;
                 tabla[hova.oszlop, hova.sor] = hova;
             }
@@ -110,18 +110,17 @@ namespace Sakk
                 honnan.Lepes(hovaSor, hovaOszlop);
                 honnan.setChanged();
                 hova.setChanged();
-                honnan.lepesekSzama++;
                 tabla[honnan.oszlop, honnan.sor] = honnan;
                 tabla[hova.oszlop, hova.sor] = hova;
             }
             
             LehetosegekTorlese();
-			if (hova.IsType(typeof(Kiraly)) && hova.babuFekete)
+			if (hova is Kiraly && hova.babuFekete)
 			{
                 MessageBox.Show("A fehér nyert!");
                 jatekVege = true;
 			}
-            if (hova.IsType(typeof(Kiraly)) && hova.babuFeher)
+            if (hova is Kiraly && hova.babuFeher)
             {
                 MessageBox.Show("A fekete nyert!");
                 jatekVege = true;
@@ -129,19 +128,19 @@ namespace Sakk
         }
         public bool FeherFelfeleTudSancolni()
         {
-            return tabla[0, 3].IsType(typeof(Kiraly)) && tabla[0, 3].babuFeher && tabla[0, 3].lepesekSzama == 0 && tabla[0, 0].IsType(typeof(Bastya)) && tabla[0, 0].lepesekSzama == 0 && tabla[0, 0].babuSzine == BabuSzine.FEHER && !tabla[0, 1].foglalt && !tabla[0, 2].foglalt;
+            return tabla[0, 3] is Kiraly && tabla[0, 3].babuFeher && (tabla[0, 3] as LepesSzamlalo).nemLepettMeg && tabla[0, 0] is Bastya && (tabla[0, 0] as LepesSzamlalo).nemLepettMeg && tabla[0, 0].babuFeher && !tabla[0, 1].foglalt && !tabla[0, 2].foglalt;
         }
         public bool FeherLefeleTudSancolni()
         {
-            return tabla[0, 3].IsType(typeof(Kiraly)) && tabla[0, 3].babuFeher && tabla[0, 3].lepesekSzama == 0 && tabla[0, 7].IsType(typeof(Bastya)) && tabla[0, 7].lepesekSzama == 0 && tabla[0, 7].babuSzine == BabuSzine.FEHER && !tabla[0, 4].foglalt && !tabla[0, 5].foglalt && !tabla[0, 6].foglalt; 
+            return tabla[0, 3] is Kiraly && tabla[0, 3].babuFeher && (tabla[0, 3] as LepesSzamlalo).nemLepettMeg && tabla[0, 7] is Bastya && (tabla[0, 7] as LepesSzamlalo).nemLepettMeg && tabla[0, 7].babuFeher && !tabla[0, 4].foglalt && !tabla[0, 5].foglalt && !tabla[0, 6].foglalt; 
         }
         public bool FeketeFelfeleTudSancolni()
         {
-            return tabla[7, 3].IsType(typeof(Kiraly)) && tabla[7, 3].babuFekete && tabla[7, 3].lepesekSzama == 0 && tabla[7, 0].IsType(typeof(Bastya)) && tabla[7, 0].lepesekSzama == 0 && tabla[7, 0].babuSzine == BabuSzine.FEKETE && !tabla[7, 1].foglalt && !tabla[7, 2].foglalt;
+            return tabla[7, 3] is Kiraly && tabla[7, 3].babuFekete && (tabla[7, 3] as LepesSzamlalo).nemLepettMeg && tabla[7, 0] is Bastya && (tabla[7, 0] as LepesSzamlalo).nemLepettMeg && tabla[7, 0].babuFekete && !tabla[7, 1].foglalt && !tabla[7, 2].foglalt;
         }
         public bool FeketeLefeleTudSancolni()
         {
-            return tabla[7, 3].IsType(typeof(Kiraly)) && tabla[7, 3].babuFekete && tabla[7, 3].lepesekSzama == 0 && tabla[7, 7].IsType(typeof(Bastya)) && tabla[7, 7].lepesekSzama == 0 && tabla[7, 7].babuSzine == BabuSzine.FEKETE && !tabla[7, 4].foglalt && !tabla[7, 5].foglalt && !tabla[7, 6].foglalt;
+            return tabla[7, 3] is Kiraly && tabla[7, 3].babuFekete && (tabla[7, 3] as LepesSzamlalo).nemLepettMeg && tabla[7, 7] is Bastya && (tabla[7, 7] as LepesSzamlalo).nemLepettMeg && tabla[7, 7].babuFekete && !tabla[7, 4].foglalt && !tabla[7, 5].foglalt && !tabla[7, 6].foglalt;
         }
         //előzőleg kijelölt területek törlése
         public void LehetosegekTorlese()
@@ -594,7 +593,7 @@ namespace Sakk
                         {
                             if (!tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
                             {
-                                if (!tabla[babuHelyzete.oszlop + 2, babuHelyzete.sor].foglalt && babuHelyzete.lepesekSzama == 0)
+                                if (!tabla[babuHelyzete.oszlop + 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)
                                 {
                                     lepesiLehetoseg(tabla[babuHelyzete.oszlop + 2, babuHelyzete.sor], babuHelyzete);
                                 }
@@ -633,7 +632,7 @@ namespace Sakk
                         {
                             if (!tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor].foglalt)
                             {
-								if (!tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor].foglalt && babuHelyzete.lepesekSzama == 0)
+								if (!tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)
 								{
                                     lepesiLehetoseg(tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor], babuHelyzete);
                                 }

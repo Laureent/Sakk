@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Babuk\Kiralyno.cs" />
     <Compile Include="Babuk\Futo.cs" />
+    <Compile Include="Babuk\LepesSzamlalo.cs" />
     <Compile Include="Babuk\Lo.cs" />
     <Compile Include="Babuk\Bastya.cs" />
     <Compile Include="Babuk\Kiraly.cs" />

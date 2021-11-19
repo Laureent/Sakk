@@ -34,7 +34,7 @@ namespace Sakk
             changed = true;
         }
 
-        public void Lepes(int sor, int oszlop)
+        virtual public void Lepes(int sor, int oszlop)
         {
             this.oszlop = oszlop;
             this.sor = sor;

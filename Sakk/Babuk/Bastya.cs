@@ -1,11 +1,10 @@
-﻿namespace Sakk
+﻿namespace Sakk.Babuk
 {
-	public class Bastya : Mezo
+	public class Bastya : LepesSzamlalo
 	{
-		
 		public Bastya(int sor, int oszlop) : base(sor, oszlop)
 		{
-			
+
 		}
-	}
+    }
 }

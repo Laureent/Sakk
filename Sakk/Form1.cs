@@ -54,11 +54,11 @@ namespace Sakk
                         {
                             sakkTabla.tabla[i, h].gomb.BackColor = Color.Gray;
                         }
-                        else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEHER)
+                        else if (sakkTabla.tabla[i, h].babuFeher)
                         {
                             sakkTabla.tabla[i, h].gomb.BackColor = Color.White;
                         }
-                        else if (sakkTabla.tabla[i, h].babuSzine == BabuSzine.FEKETE)
+                        else if (sakkTabla.tabla[i, h].babuFekete)
                         {
                             sakkTabla.tabla[i, h].gomb.BackColor = Color.Black;
                             sakkTabla.tabla[i, h].gomb.ForeColor = Color.White;
@@ -77,6 +77,7 @@ namespace Sakk
                         {
                             sakkTabla.tabla[i, h].gomb.Enabled = false;
                         }
+                        tableLayoutPanel1.Controls.Add(sakkTabla.tabla[i, h].gomb, i, h);
                         panel1.Controls.Add(sakkTabla.tabla[i, h].gomb);
                         sakkTabla.tabla[i, h].clearChanged();
                     }

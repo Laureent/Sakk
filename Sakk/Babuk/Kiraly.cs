@@ -1,12 +1,10 @@
-﻿namespace Sakk
+﻿namespace Sakk.Babuk
 {
-	public class Kiraly : Mezo
+	public class Kiraly : LepesSzamlalo
 	{
-		public int lepesekSzama { get; set; }
-
 		public Kiraly(int sor, int oszlop) : base(sor, oszlop)
 		{
-			lepesekSzama = 0;
 		}
+
 	}
 }
