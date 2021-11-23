@@ -20,9 +20,7 @@ namespace Sakk.Babuk
 		public BabuSzine babuSzine { get; set; }
         public bool babuFekete { get => babuSzine == BabuSzine.FEKETE && !IsType(typeof(Mezo)); }
         public bool babuFeher { get => babuSzine == BabuSzine.FEHER && !IsType(typeof(Mezo)); }
-        //public bool nemLepettMeg { get => lepesekSzama == 0; }
         public Button gomb { get; set; }
-		//public int lepesekSzama { get; set; }
         public bool changed { get; private set; }
         public Babu babuTipus { get; set; }
         public Tabla tabla { get; set; }
@@ -32,7 +30,6 @@ namespace Sakk.Babuk
             this.sor = sor;
             this.oszlop = oszlop;
             gomb = new Button();
-            //lepesekSzama = 0;
             changed = true;
         }
 

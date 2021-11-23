@@ -1,6 +1,6 @@
 ﻿namespace Sakk.Babuk
 {
-    public class Babu : Mezo
+    public class Babu : LepesBeallitasok
     {
         public Babu(int sor, int oszlop) : base(sor, oszlop)
         {
@@ -17,7 +17,73 @@
             {
                 new Bastya(sor, oszlop).LepesBeallitas(babuHelyzete, tabla);
             }
-            //new Paraszt(sor, oszlop).LepesBeallitas(babuHelyzete, tabla);
+        }
+        public void BastyaLepesek(Mezo babuHelyzete, Tabla tabla)
+        {
+            LepesBeallitasFelfele(babuHelyzete, tabla, false);
+            LepesBeallitasLefele(babuHelyzete, tabla, false);
+            LepesBeallitasJobbra(babuHelyzete, tabla, false);
+            LepesBeallitasBalra(babuHelyzete, tabla, false);
+        }
+        public void FutoLepesek(Mezo babuHelyzete, Tabla tabla)
+        {
+            LepesBeallitasBalraFel(babuHelyzete, tabla, false);
+            LepesBeallitasJobbraFel(babuHelyzete, tabla, false);
+            LepesBeallitasBalraLe(babuHelyzete, tabla, false);
+            LepesBeallitasJobbraLe(babuHelyzete, tabla, false);
+        }
+        public void SancolasVizsgalat()
+        {
+            if (tabla.FeherFelfeleTudSancolni())
+            {
+                tabla.tabla[0, 1].lepesek = true;
+            }
+            if (tabla.FeherLefeleTudSancolni())
+            {
+                tabla.tabla[0, 5].lepesek = true;
+            }
+            if (tabla.FeketeFelfeleTudSancolni())
+            {
+                tabla.tabla[7, 1].lepesek = true;
+            }
+            if (tabla.FeketeLefeleTudSancolni())
+            {
+                tabla.tabla[7, 5].lepesek = true;
+            }
+        }
+        public void KiralyLepesek(Mezo babuHelyzete, Tabla tabla)
+        {
+            SancolasVizsgalat();
+            LepesBeallitasFelfele(babuHelyzete, tabla, true);
+            LepesBeallitasJobbra(babuHelyzete, tabla, true);
+            LepesBeallitasLefele(babuHelyzete, tabla, true);
+            LepesBeallitasBalra(babuHelyzete, tabla, true);
+            LepesBeallitasBalraFel(babuHelyzete, tabla, true);
+            LepesBeallitasJobbraFel(babuHelyzete, tabla, true);
+            LepesBeallitasBalraLe(babuHelyzete, tabla, true);
+            LepesBeallitasJobbraLe(babuHelyzete, tabla, true);
+        }
+        public void KiralynoLepesek(Mezo babuHelyzete, Tabla tabla)
+        {
+            LepesBeallitasFelfele(babuHelyzete, tabla, false);
+            LepesBeallitasJobbra(babuHelyzete, tabla, false);
+            LepesBeallitasLefele(babuHelyzete, tabla, false);
+            LepesBeallitasBalra(babuHelyzete, tabla, false);
+            LepesBeallitasBalraFel(babuHelyzete, tabla, false);
+            LepesBeallitasJobbraFel(babuHelyzete, tabla, false);
+            LepesBeallitasBalraLe(babuHelyzete, tabla, false);
+            LepesBeallitasJobbraLe(babuHelyzete, tabla, false);
+        }
+        public void LoLepesek(Mezo babuHelyzete, Tabla tabla)
+        {
+            LoFelBalra(babuHelyzete, tabla);
+            LoFelJobbra(babuHelyzete, tabla);
+            LoBalraFel(babuHelyzete, tabla);
+            LoBalraLe(babuHelyzete, tabla);
+            LoJobbraFel(babuHelyzete, tabla);
+            LoJobbraLe(babuHelyzete, tabla);
+            LoLeBalra(babuHelyzete, tabla);
+            LoLeJobbra(babuHelyzete, tabla);
         }
     }
 }

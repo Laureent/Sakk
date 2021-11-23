@@ -165,10 +165,7 @@ namespace Sakk
         {
             babu.LepesBeallitas(babuHelyzete, this);
         }
-
-
-
-        
+ 
         public void babuGeneralasa(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
         {
             if (babuTipusa == "Bastya")
@@ -213,7 +210,6 @@ namespace Sakk
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Paraszt";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
-
         }
 
         public void bastyakGeneralasa()

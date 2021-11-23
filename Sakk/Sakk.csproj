@@ -62,6 +62,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Koordinata.cs" />
+    <Compile Include="Babuk\LepesBeallitasok.cs" />
     <Compile Include="Mezo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
