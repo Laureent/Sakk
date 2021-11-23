@@ -38,7 +38,7 @@ namespace Sakk
             if (mezo.foglalt && !mezo.lepesek && kovetkezoSzin == mezo.babuSzine)
             {
                 LehetosegekTorlese();
-                LehetosegekBeallitasa(mezo, mezo.babuNeve);
+                LehetosegekBeallitasa(mezo, mezo.babuTipus);
                 aktivMezo = new Koordinata(mezo.oszlop, mezo.sor);
             }
             else if (mezo.lepesek)
@@ -164,12 +164,12 @@ namespace Sakk
             }
         }
         //bábuk lépés szabályai
-        public void LehetosegekBeallitasa(Mezo babuHelyzete, string babuNev)
+        public void LehetosegekBeallitasa(Mezo babuHelyzete, Babu babu)
         {
-            int seged = 1;
-            switch (babuNev)
+            babu.LepesBeallitas(babuHelyzete, this);
+            /*switch (babu)
             {                                   
-                case "Ló":
+                /*case "Ló":
                     //felfele balra
                     if (babuHelyzete.sor - 2 > -1 && babuHelyzete.oszlop - 1 > -1)
                     {
@@ -210,9 +210,9 @@ namespace Sakk
                     {
                         lepesiLehetoseg(tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 2], babuHelyzete);
                     }
-                    break;
+                    break;*/
 
-                case "Király":
+                /*case "Király":
                     //rosálás ha lehetséges
 					if (FeherFelfeleTudSancolni())
 					{
@@ -270,9 +270,9 @@ namespace Sakk
                     {
                         lepesiLehetoseg(tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1], babuHelyzete);
                     }
-                    break;
+                    break;*/
 
-                case "Királynő":
+                /*case "Királynő":
                     //felfelé
                         while (babuHelyzete.sor - seged > -1)
                         {
@@ -425,9 +425,9 @@ namespace Sakk
                             seged++;
                         }
                     seged = 1;
-                    break;
+                    break;*/
 
-                case "Futó":
+                /*case "Futó":
                     //felfelé jobbra
                         while (babuHelyzete.oszlop + seged < 8 && babuHelyzete.sor - seged > -1)
                         {
@@ -504,11 +504,12 @@ namespace Sakk
                             seged++;
                         }
                     seged = 1;
-                    break;
+                    break;*/
 
-                case "Bástya":
+                /*case "Bástya":
                     //felfelé
-                        while (babuHelyzete.sor - seged > -1)
+                        
+                    while (babuHelyzete.sor - seged > -1)
                         {
                             if (tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].foglalt)
                             {
@@ -668,7 +669,7 @@ namespace Sakk
 
                 default:
                     break;
-            }
+            }*/
         }
         //tábla alaphelyzet
         public void jatekInditasa()
@@ -676,6 +677,7 @@ namespace Sakk
             kovetkezoSzin = BabuSzine.FEHER;
 
             tabla[0, 0] = new Bastya(0, 0);
+            tabla[0, 0].babuTipus = new Babu(0, 0);
             tabla[0, 0].babuNeve = "Bástya";
             tabla[0, 0].babuSzine = BabuSzine.FEHER;
 
@@ -708,6 +710,7 @@ namespace Sakk
             tabla[0, 7].babuSzine = BabuSzine.FEHER;
 
             tabla[1, 0] = new Paraszt(0, 1);
+            tabla[1, 0].babuTipus = new Babu(0, 1);
             tabla[1, 0].babuNeve = "Paraszt";
             tabla[1, 0].babuSzine = BabuSzine.FEHER;
 
