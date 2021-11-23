@@ -40,7 +40,7 @@ namespace Sakk
 
             for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
             {
-                for (int h = 0; h < sakkTabla.tabla.GetLength(1); h++)
+                for (int h = 0; h < sakkTabla.tabla.GetLength(0); h++)
                 {
 					if (sakkTabla.tabla[i, h].changed)
 					{

@@ -4,7 +4,8 @@
 	{
 		public Paraszt(int sor, int oszlop) : base(sor, oszlop)
 		{
-		}
+            babuNeve = "Paraszt";
+        }
 		public void LepesBeallitas(Mezo babuHelyzete, Tabla tabla)
 		{
             //fehér

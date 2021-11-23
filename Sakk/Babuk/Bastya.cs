@@ -2,11 +2,12 @@
 {
 	public class Bastya : LepesSzamlalo
 	{
+		public string babuNeve { get; set; }
 		public Bastya(int sor, int oszlop) : base(sor, oszlop)
 		{
-
+            babuNeve = "Bástya";
 		}
-		public void LepesBeallitas(Mezo babuHelyzete, Tabla tabla)
+		public override void LepesBeallitas(Mezo babuHelyzete, Tabla tabla)
 		{
             int seged = 1;
             //felfelé

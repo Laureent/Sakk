@@ -17,7 +17,7 @@
             {
                 new Bastya(sor, oszlop).LepesBeallitas(babuHelyzete, tabla);
             }
-            new Paraszt(sor, oszlop).LepesBeallitas(babuHelyzete, tabla);
+            //new Paraszt(sor, oszlop).LepesBeallitas(babuHelyzete, tabla);
         }
     }
 }
