@@ -20,44 +20,7 @@
         }
         public void ParasztLepesek(Mezo babuHelyzete, Tabla tabla)
         {
-            if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFeher)
-            {
-                if (babuHelyzete.oszlop + 2 < 8 && !tabla.tabla[babuHelyzete.oszlop + 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)
-                {
-                    LepesBeallitasJobbra(babuHelyzete, tabla, 2);
-                }
-                if (!tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
-                {
-                    LepesBeallitasJobbra(babuHelyzete, tabla, 1);
-                }                
-                if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop + 1 < 8 && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].foglalt && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].babuFekete)
-                {
-                    LepesBeallitasJobbraFel(babuHelyzete, tabla, true);
-                }
-                if (babuHelyzete.sor + 1 < 8 && babuHelyzete.oszlop + 1 < 8 && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].foglalt && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].babuFekete)
-                {
-                    LepesBeallitasJobbraLe(babuHelyzete, tabla, true);
-                }              
-            }
-            if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFekete)
-            {
-                if (babuHelyzete.oszlop - 2 > -1 && !tabla.tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)
-                {
-                    LepesBeallitasBalra(babuHelyzete, tabla, 2);
-                }
-                if (!tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor].foglalt)
-                {
-                    LepesBeallitasBalra(babuHelyzete, tabla, 1);
-                }
-                if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop - 1 > -1 && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].foglalt && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].babuFekete)
-                {
-                    LepesBeallitasBalraFel(babuHelyzete, tabla, true);
-                }
-                if (babuHelyzete.sor + 1 < 8 && babuHelyzete.oszlop - 1 > -1 && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].foglalt && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].babuFekete)
-                {
-                    LepesBeallitasBalraLe(babuHelyzete, tabla, true);
-                }
-            }
+            ParasztElore(babuHelyzete, tabla);
         }
         public void BastyaLepesek(Mezo babuHelyzete, Tabla tabla)
         {

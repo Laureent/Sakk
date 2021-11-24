@@ -9,7 +9,6 @@
         public void LepesBeallitasFelfele(Mezo babuHelyzete, Tabla tabla, bool egyszerFussonLe)
         {
             int seged = 1;
-            int db = 0;
             while (babuHelyzete.sor - seged > -1)
             {
                 if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].foglalt)
@@ -57,11 +56,10 @@
                 }
             }
         }
-        public void LepesBeallitasJobbra(Mezo babuHelyzete, Tabla tabla, int egyszerFussonLe)
+        public void LepesBeallitasJobbra(Mezo babuHelyzete, Tabla tabla, int hasznyorFussonLe)
         {
             int seged = 1;
-            int db = 0;
-            while (babuHelyzete.oszlop + seged < 8 && egyszerFussonLe != db)
+            while (babuHelyzete.oszlop + seged < 8)
             {
                 if (tabla.tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor].foglalt)
                 {
@@ -76,20 +74,18 @@
                 {
                     tabla.lepesiLehetoseg(tabla.tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor], babuHelyzete);
                 }
-                seged++;
-                db++;
-                /*if (egyszerFussonLe)
+                if (seged == hasznyorFussonLe && hasznyorFussonLe != -1)
                 {
                     break;
-                }*/
+                }
+                seged++;               
             }
         }
 
-        public void LepesBeallitasBalra(Mezo babuHelyzete, Tabla tabla, int egyszerFussonLe)
+        public void LepesBeallitasBalra(Mezo babuHelyzete, Tabla tabla, int hanyszorFussonLe)
         {
             int seged = 1;
-            int db = 0;
-            while (babuHelyzete.oszlop - seged > -1 && egyszerFussonLe != db)
+            while (babuHelyzete.oszlop - seged > -1 )
             {
                 if (tabla.tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor].foglalt)
                 {
@@ -104,12 +100,11 @@
                 {
                     tabla.lepesiLehetoseg(tabla.tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor], babuHelyzete);
                 }
-                seged++;
-                db++;
-                /*if (egyszerFussonLe)
+                if (seged == hanyszorFussonLe && hanyszorFussonLe != -1)
                 {
                     break;
-                }*/
+                }
+                seged++;               
             }
         }
 
@@ -269,6 +264,48 @@
             {
                 tabla.lepesiLehetoseg(tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 2], babuHelyzete);
             }
-        }      
+        }   
+        
+        public void ParasztElore(Mezo babuHelyzete ,Tabla tabla)
+        {
+            if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFeher)
+            {
+                if (babuHelyzete.oszlop + 2 < 8 && !tabla.tabla[babuHelyzete.oszlop + 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)
+                {
+                    LepesBeallitasJobbra(babuHelyzete, tabla, 2);
+                }
+                if (!tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
+                {
+                    LepesBeallitasJobbra(babuHelyzete, tabla, 1);
+                }
+                if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop + 1 < 8 && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].foglalt && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor - 1].babuFekete)
+                {
+                    LepesBeallitasJobbraFel(babuHelyzete, tabla, true);
+                }
+                if (babuHelyzete.sor + 1 < 8 && babuHelyzete.oszlop + 1 < 8 && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].foglalt && tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 1].babuFekete)
+                {
+                    LepesBeallitasJobbraLe(babuHelyzete, tabla, true);
+                }
+            }
+            if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFekete)
+            {
+                if (babuHelyzete.oszlop - 2 > -1 && !tabla.tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)
+                {
+                    LepesBeallitasBalra(babuHelyzete, tabla, 2);
+                }
+                if (!tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor].foglalt)
+                {
+                    LepesBeallitasBalra(babuHelyzete, tabla, 1);
+                }
+                if (babuHelyzete.sor - 1 > -1 && babuHelyzete.oszlop - 1 > -1 && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].foglalt && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor - 1].babuFeher)
+                {
+                    LepesBeallitasBalraFel(babuHelyzete, tabla, true);
+                }
+                if (babuHelyzete.sor + 1 < 8 && babuHelyzete.oszlop - 1 > -1 && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].foglalt && tabla.tabla[babuHelyzete.oszlop - 1, babuHelyzete.sor + 1].babuFeher)
+                {
+                    LepesBeallitasBalraLe(babuHelyzete, tabla, true);
+                }
+            }
+        }
     }
 }
