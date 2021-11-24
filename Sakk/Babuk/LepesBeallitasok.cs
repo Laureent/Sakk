@@ -9,6 +9,7 @@
         public void LepesBeallitasFelfele(Mezo babuHelyzete, Tabla tabla, bool egyszerFussonLe)
         {
             int seged = 1;
+            int db = 0;
             while (babuHelyzete.sor - seged > -1)
             {
                 if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor - seged].foglalt)
@@ -56,10 +57,11 @@
                 }
             }
         }
-        public void LepesBeallitasJobbra(Mezo babuHelyzete, Tabla tabla, bool egyszerFussonLe)
+        public void LepesBeallitasJobbra(Mezo babuHelyzete, Tabla tabla, int egyszerFussonLe)
         {
             int seged = 1;
-            while (babuHelyzete.oszlop + seged < 8)
+            int db = 0;
+            while (babuHelyzete.oszlop + seged < 8 && egyszerFussonLe != db)
             {
                 if (tabla.tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor].foglalt)
                 {
@@ -75,17 +77,19 @@
                     tabla.lepesiLehetoseg(tabla.tabla[babuHelyzete.oszlop + seged, babuHelyzete.sor], babuHelyzete);
                 }
                 seged++;
-                if (egyszerFussonLe)
+                db++;
+                /*if (egyszerFussonLe)
                 {
                     break;
-                }
+                }*/
             }
         }
 
-        public void LepesBeallitasBalra(Mezo babuHelyzete, Tabla tabla, bool egyszerFussonLe)
+        public void LepesBeallitasBalra(Mezo babuHelyzete, Tabla tabla, int egyszerFussonLe)
         {
             int seged = 1;
-            while (babuHelyzete.oszlop - seged > -1)
+            int db = 0;
+            while (babuHelyzete.oszlop - seged > -1 && egyszerFussonLe != db)
             {
                 if (tabla.tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor].foglalt)
                 {
@@ -101,10 +105,11 @@
                     tabla.lepesiLehetoseg(tabla.tabla[babuHelyzete.oszlop - seged, babuHelyzete.sor], babuHelyzete);
                 }
                 seged++;
-                if (egyszerFussonLe)
+                db++;
+                /*if (egyszerFussonLe)
                 {
                     break;
-                }
+                }*/
             }
         }
 
@@ -264,6 +269,6 @@
             {
                 tabla.lepesiLehetoseg(tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor + 2], babuHelyzete);
             }
-        }
+        }      
     }
 }
