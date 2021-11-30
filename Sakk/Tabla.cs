@@ -87,6 +87,8 @@ namespace Sakk
 
             if ((honnan.babuFekete && hova.babuFeher) || (honnan.babuFeher && hova.babuFekete))
             {
+                hova = new Mezo(hova.sor,hova.oszlop);
+                tabla[hova.oszlop, hova.sor] = hova;
                 int honnanSor = honnan.sor;
                 int honnanOszlop = honnan.oszlop;
                 honnan.Lepes(hova.sor, hova.oszlop);

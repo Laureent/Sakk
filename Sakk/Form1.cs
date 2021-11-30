@@ -37,43 +37,29 @@ namespace Sakk
         private void panelModositas()
         {
             //panel1.Controls.Clear();
+            const int meret = 70;
 
             for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
             {
                 for (int h = 0; h < sakkTabla.tabla.GetLength(0); h++)
                 {
-					if (sakkTabla.tabla[i, h].changed)
+                    var mezo = sakkTabla.tabla[i, h];
+					if (mezo.changed)
 					{
-                        if (sakkTabla.tabla[i, h].lepesek && !sakkTabla.tabla[i, h].foglalt)
-                        {
-                            sakkTabla.tabla[i, h].gomb.BackColor = Color.Gray;
-                        }
-                        else if (sakkTabla.tabla[i, h].babuFeher)
-                        {
-                            sakkTabla.tabla[i, h].gomb.BackColor = Color.White;
-                        }
-                        else if (sakkTabla.tabla[i, h].babuFekete)
-                        {
-                            sakkTabla.tabla[i, h].gomb.BackColor = Color.Black;
-                            sakkTabla.tabla[i, h].gomb.ForeColor = Color.White;
-                        }
-                        else if (!sakkTabla.tabla[i, h].lepesek)
-                        {
-                            sakkTabla.tabla[i, h].gomb.BackColor = default(Color);
-                        }
-                        sakkTabla.tabla[i, h].gomb.Location = new Point(i * 70, h * 70);
-                        sakkTabla.tabla[i, h].gomb.Text = sakkTabla.tabla[i, h].babuNeve;
-                        sakkTabla.tabla[i, h].gomb.Height = 70;
-                        sakkTabla.tabla[i, h].gomb.Width = 70;
-                        sakkTabla.tabla[i, h].gomb.Click -= GombNyomas;
-                        sakkTabla.tabla[i, h].gomb.Click += GombNyomas;
+                        mezo.szinez();
+                        mezo.gomb.Location = new Point(i * meret, h * meret);
+                        mezo.gomb.Text = mezo.babuNeve;
+                        mezo.gomb.Height = meret;
+                        mezo.gomb.Width = meret;
+                        //mezo.gomb.Click -= GombNyomas;
+                        mezo.gomb.Click += GombNyomas;
                         if (sakkTabla.jatekVege)
                         {
-                            sakkTabla.tabla[i, h].gomb.Enabled = false;
+                            mezo.gomb.Enabled = false;
                         }
-                        tableLayoutPanel1.Controls.Add(sakkTabla.tabla[i, h].gomb, i, h);
-                        panel1.Controls.Add(sakkTabla.tabla[i, h].gomb);
-                        sakkTabla.tabla[i, h].clearChanged();
+                        //tableLayoutPanel1.Controls.Add(mezo.gomb, i, h);
+                        panel1.Controls.Add(mezo.gomb);
+                        mezo.clearChanged();
                     }
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Sakk.Babuk
@@ -47,5 +48,26 @@ namespace Sakk.Babuk
         public void clearChanged() => changed = false;
 
         public void setChanged() => changed = true;
+
+        internal void szinez()
+        {
+            if (lepesek && !foglalt)
+            {
+                gomb.BackColor = Color.Gray;
+            }
+            else if (babuFeher)
+            {
+                gomb.BackColor = Color.White;
+            }
+            else if (babuFekete)
+            {
+                gomb.BackColor = Color.Black;
+                gomb.ForeColor = Color.White;
+            }
+            else if (!lepesek)
+            {
+                gomb.BackColor = default(Color);
+            }
+        }
     }
 }
