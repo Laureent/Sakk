@@ -49,24 +49,43 @@ namespace Sakk.Babuk
 
         public void setChanged() => changed = true;
 
+        public void SzegelySzinezes(Button gomb,Color szegelySzin,int meret)
+        {
+            gomb.FlatAppearance.BorderColor = szegelySzin;
+            gomb.FlatAppearance.BorderSize = meret;
+        }
+
+        public void HatterEsBetuszinAllitas(Button gomb,Color hatterSzin = default(Color), Color betuSzin = default(Color))
+        {
+            gomb.BackColor = hatterSzin;
+            gomb.ForeColor = betuSzin;
+        }
+
+        //mezők kinézetének beállítása(színek)
         internal void szinez()
         {
             if (lepesek && !foglalt)
             {
-                gomb.BackColor = Color.Gray;
+                SzegelySzinezes(gomb, Color.Black,2);
+            }
+            else if (lepesek && foglalt)
+            {
+                SzegelySzinezes(gomb, Color.Red,3);
             }
             else if (babuFeher)
             {
-                gomb.BackColor = Color.White;
-            }
+                SzegelySzinezes(gomb, Color.White, 2);
+                HatterEsBetuszinAllitas(gomb, Color.White, Color.Black);
+            } 
             else if (babuFekete)
             {
-                gomb.BackColor = Color.Black;
-                gomb.ForeColor = Color.White;
+                SzegelySzinezes(gomb, Color.Black, 2);
+                HatterEsBetuszinAllitas(gomb, Color.Black, Color.White);
             }
             else if (!lepesek)
             {
-                gomb.BackColor = default(Color);
+                SzegelySzinezes(gomb, Color.LightGray, 2);
+                HatterEsBetuszinAllitas(gomb);
             }
         }
     }

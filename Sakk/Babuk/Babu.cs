@@ -20,7 +20,8 @@
         }
         public void ParasztLepesek(Mezo babuHelyzete, Tabla tabla)
         {
-            ParasztElore(babuHelyzete, tabla);
+            FeherParasztLepes(babuHelyzete, tabla);
+            FeketeParasztLepes(babuHelyzete, tabla);
         }
         public void BastyaLepesek(Mezo babuHelyzete, Tabla tabla)
         {
@@ -36,28 +37,53 @@
             LepesBeallitasBalraLe(babuHelyzete, tabla, false);
             LepesBeallitasJobbraLe(babuHelyzete, tabla, false);
         }
-        public void SancolasVizsgalat(Tabla tabla)
+
+        public bool FeherFelfeleTudSancolni(Tabla tabla)
         {
-            if (tabla.FeherFelfeleTudSancolni())
-            {
-                tabla.tabla[0, 1].lepesek = true;
-            }
-            if (tabla.FeherLefeleTudSancolni())
-            {
-                tabla.tabla[0, 5].lepesek = true;
-            }
-            if (tabla.FeketeFelfeleTudSancolni())
-            {
-                tabla.tabla[7, 1].lepesek = true;
-            }
-            if (tabla.FeketeLefeleTudSancolni())
-            {
-                tabla.tabla[7, 5].lepesek = true;
-            }
+            return tabla.tabla[0, 3] is Kiraly && tabla.tabla[0, 3].babuFeher && (tabla.tabla[0, 3] as LepesSzamlalo).nemLepettMeg && tabla.tabla[0, 0] is Bastya && (tabla.tabla[0, 0] as LepesSzamlalo).nemLepettMeg && tabla.tabla[0, 0].babuFeher && !tabla.tabla[0, 1].foglalt && !tabla.tabla[0, 2].foglalt;
         }
+        public bool FeherLefeleTudSancolni(Tabla tabla)
+        {
+            return tabla.tabla[0, 3] is Kiraly && tabla.tabla[0, 3].babuFeher && (tabla.tabla[0, 3] as LepesSzamlalo).nemLepettMeg && tabla.tabla[0, 7] is Bastya && (tabla.tabla[0, 7] as LepesSzamlalo).nemLepettMeg && tabla.tabla[0, 7].babuFeher && !tabla.tabla[0, 4].foglalt && !tabla.tabla[0, 5].foglalt && !tabla.tabla[0, 6].foglalt;
+        }
+        public bool FeketeFelfeleTudSancolni(Tabla tabla)
+        {
+            return tabla.tabla[7, 3] is Kiraly && tabla.tabla[7, 3].babuFekete && (tabla.tabla[7, 3] as LepesSzamlalo).nemLepettMeg && tabla.tabla[7, 0] is Bastya && (tabla.tabla[7, 0] as LepesSzamlalo).nemLepettMeg && tabla.tabla[7, 0].babuFekete && !tabla.tabla[7, 1].foglalt && !tabla.tabla[7, 2].foglalt;
+        }
+        public bool FeketeLefeleTudSancolni(Tabla tabla)
+        {
+            return tabla.tabla[7, 3] is Kiraly && tabla.tabla[7, 3].babuFekete && (tabla.tabla[7, 3] as LepesSzamlalo).nemLepettMeg && tabla.tabla[7, 7] is Bastya && (tabla.tabla[7, 7] as LepesSzamlalo).nemLepettMeg && tabla.tabla[7, 7].babuFekete && !tabla.tabla[7, 4].foglalt && !tabla.tabla[7, 5].foglalt && !tabla.tabla[7, 6].foglalt;
+        }
+
+        public void SancolasVizsgalat(Mezo babuHelyzete,Tabla tabla)
+        {
+            if (babuHelyzete.babuFeher)
+            {
+                if (FeherFelfeleTudSancolni(tabla))
+                {
+                    tabla.tabla[0, 1].lepesek = true;
+                }
+                if (FeherLefeleTudSancolni(tabla))
+                {
+                    tabla.tabla[0, 5].lepesek = true;
+                }
+            }
+            if(babuHelyzete.babuFekete)
+            {
+                if (FeketeFelfeleTudSancolni(tabla))
+                {
+                    tabla.tabla[7, 1].lepesek = true;
+                }
+                if (FeketeLefeleTudSancolni(tabla))
+                {
+                    tabla.tabla[7, 5].lepesek = true;
+                }
+            }           
+        }
+
         public void KiralyLepesek(Mezo babuHelyzete, Tabla tabla)
         {
-            SancolasVizsgalat(tabla);
+            SancolasVizsgalat(babuHelyzete,tabla);
             LepesBeallitasFelfele(babuHelyzete, tabla, true);
             LepesBeallitasJobbra(babuHelyzete, tabla, 1);
             LepesBeallitasLefele(babuHelyzete, tabla, true);

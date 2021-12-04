@@ -1,5 +1,4 @@
 ﻿using Sakk.Babuk;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Sakk
@@ -10,7 +9,6 @@ namespace Sakk
         private Koordinata aktivMezo { get; set; }
         public BabuSzine kovetkezoSzin { get; set; }
         public bool jatekVege { get; set; }
-        private int utesSzamlalo = 63;
 
         //tábla legenerálása
         public Tabla(int tablameret)
@@ -28,6 +26,7 @@ namespace Sakk
                 }
             }
         }
+
         //bábu kiválasztása vagy léptetése
         public void GombNyomas(Mezo mezo, Button gomb = null, Panel panel = null)
         {
@@ -51,6 +50,50 @@ namespace Sakk
                 }
             }
         }
+
+        //sima lépés, ütés nem történik
+        public void SimaLepes(Mezo honnan, Mezo hova, Panel panel = null, Button gomb = null)
+        {
+            int hovaSor = hova.sor;
+            int hovaOszlop = hova.oszlop;
+            hova.Lepes(honnan.sor, honnan.oszlop);
+            honnan.Lepes(hovaSor, hovaOszlop);
+            honnan.setChanged();
+            hova.setChanged();
+            tabla[honnan.oszlop, honnan.sor] = honnan;
+            tabla[hova.oszlop, hova.sor] = hova;
+        }
+
+        //bábu leütése
+        public void BabuLeutese(Mezo honnan, Mezo hova, Panel panel = null, Button gomb = null)
+        {
+            panel.Controls.RemoveAt(panel.Controls.IndexOf(gomb));
+            int honnanSor = honnan.sor;
+            int honnanOszlop = honnan.oszlop;
+            honnan.Lepes(hova.sor, hova.oszlop);
+            hova = new Mezo(honnanSor, honnanOszlop);
+            hova.setChanged();
+            honnan.setChanged();
+            tabla[honnan.oszlop, honnan.sor] = honnan;
+            tabla[hova.oszlop, hova.sor] = hova;
+        }
+
+        //nyertes eldöntése
+        public void NyertesVizsgalat(Mezo hova)
+        {
+            if (hova is Kiraly && hova.babuFekete)
+            {
+                MessageBox.Show("A fehér nyert!");
+                jatekVege = true;
+            }
+            if (hova is Kiraly && hova.babuFeher)
+            {
+                MessageBox.Show("A fekete nyert!");
+                jatekVege = true;
+            }
+        }
+
+        //valamelyik király sáncolt-e
         private bool FeherFelfeleSancolt(Mezo honnan, Mezo hova)
         {
             return honnan.sor == 3 && honnan.oszlop == 0 && hova.sor == 1 && hova.oszlop == 0 && honnan is Kiraly;
@@ -67,8 +110,9 @@ namespace Sakk
         {
             return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan is Kiraly;
         }
-        //bábu léptetése
-        public void Lepes(Mezo honnan, Mezo hova, Panel panel = null, Button gomb = null)
+
+        //sáncolás végrehajtása 
+        public void KiralySancolasVegrehajtasVizsgalat(Mezo honnan, Mezo hova)
         {
             if (FeherFelfeleSancolt(honnan, hova))
             {
@@ -86,64 +130,26 @@ namespace Sakk
             {
                 Lepes(tabla[7, 7], tabla[7, 4]);
             }
+        }
+
+        //bábu léptetése
+        public void Lepes(Mezo honnan, Mezo hova, Panel panel = null, Button gomb = null)
+        {
+            KiralySancolasVegrehajtasVizsgalat(honnan, hova);
+            NyertesVizsgalat(hova);
 
             if ((honnan.babuFekete && hova.babuFeher) || (honnan.babuFeher && hova.babuFekete))
             {
-
-                //MessageBox.Show(panel.Controls.Count + " , " + panel.Controls.IndexOf(gomb));
-                panel.Controls.RemoveAt(panel.Controls.IndexOf(gomb));
-                //utesSzamlalo++;
-                hova = new Mezo(hova.sor,hova.oszlop);
-                tabla[hova.oszlop, hova.sor] = hova;
-                int honnanSor = honnan.sor;
-                int honnanOszlop = honnan.oszlop;
-                honnan.Lepes(hova.sor, hova.oszlop);
-                hova = new Mezo(honnanSor, honnanOszlop);
-                hova.setChanged();
-                honnan.setChanged();
-                tabla[honnan.oszlop, honnan.sor] = honnan;
-                tabla[hova.oszlop, hova.sor] = hova;
+                BabuLeutese(honnan, hova, panel, gomb);
             }
             else
             {
-                int hovaSor = hova.sor;
-                int hovaOszlop = hova.oszlop;
-                hova.Lepes(honnan.sor, honnan.oszlop);
-                honnan.Lepes(hovaSor, hovaOszlop);
-                honnan.setChanged();
-                hova.setChanged();
-                tabla[honnan.oszlop, honnan.sor] = honnan;
-                tabla[hova.oszlop, hova.sor] = hova;
+                SimaLepes(honnan, hova, panel, gomb);
             }
 
             LehetosegekTorlese();
-            if (hova is Kiraly && hova.babuFekete)
-            {
-                MessageBox.Show("A fehér nyert!");
-                jatekVege = true;
-            }
-            if (hova is Kiraly && hova.babuFeher)
-            {
-                MessageBox.Show("A fekete nyert!");
-                jatekVege = true;
-            }
         }
-        public bool FeherFelfeleTudSancolni()
-        {
-            return tabla[0, 3] is Kiraly && tabla[0, 3].babuFeher && (tabla[0, 3] as LepesSzamlalo).nemLepettMeg && tabla[0, 0] is Bastya && (tabla[0, 0] as LepesSzamlalo).nemLepettMeg && tabla[0, 0].babuFeher && !tabla[0, 1].foglalt && !tabla[0, 2].foglalt;
-        }
-        public bool FeherLefeleTudSancolni()
-        {
-            return tabla[0, 3] is Kiraly && tabla[0, 3].babuFeher && (tabla[0, 3] as LepesSzamlalo).nemLepettMeg && tabla[0, 7] is Bastya && (tabla[0, 7] as LepesSzamlalo).nemLepettMeg && tabla[0, 7].babuFeher && !tabla[0, 4].foglalt && !tabla[0, 5].foglalt && !tabla[0, 6].foglalt;
-        }
-        public bool FeketeFelfeleTudSancolni()
-        {
-            return tabla[7, 3] is Kiraly && tabla[7, 3].babuFekete && (tabla[7, 3] as LepesSzamlalo).nemLepettMeg && tabla[7, 0] is Bastya && (tabla[7, 0] as LepesSzamlalo).nemLepettMeg && tabla[7, 0].babuFekete && !tabla[7, 1].foglalt && !tabla[7, 2].foglalt;
-        }
-        public bool FeketeLefeleTudSancolni()
-        {
-            return tabla[7, 3] is Kiraly && tabla[7, 3].babuFekete && (tabla[7, 3] as LepesSzamlalo).nemLepettMeg && tabla[7, 7] is Bastya && (tabla[7, 7] as LepesSzamlalo).nemLepettMeg && tabla[7, 7].babuFekete && !tabla[7, 4].foglalt && !tabla[7, 5].foglalt && !tabla[7, 6].foglalt;
-        }
+
         //előzőleg kijelölt területek törlése
         public void LehetosegekTorlese()
         {
@@ -186,7 +192,7 @@ namespace Sakk
         }
         public void FutoGeneralasaBabuTipusaFutoEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
         {
-        if (babuTipusa == "Futo")
+            if (babuTipusa == "Futo")
             {
                 tabla[babuHelyzeteX, babuHelyzeteY] = new Futo(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuTipus = new Futo(babuHelyzeteY, babuHelyzeteX);
@@ -277,8 +283,8 @@ namespace Sakk
         }
         public void parasztokGeneralasa()
         {
-			for (int i = 0; i < 8; i++)
-			{
+            for (int i = 0; i < 8; i++)
+            {
                 babuGeneralasa("Paraszt", BabuSzine.FEHER, 1, i);
                 babuGeneralasa("Paraszt", BabuSzine.FEKETE, 6, i);
             }

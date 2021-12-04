@@ -266,7 +266,7 @@
             }
         }   
         
-        public void ParasztElore(Mezo babuHelyzete ,Tabla tabla)
+        public void FeherParasztLepes(Mezo babuHelyzete, Tabla tabla)
         {
             if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFeher)
             {
@@ -274,7 +274,7 @@
                 {
                     LepesBeallitasJobbra(babuHelyzete, tabla, 2);
                 }
-                if (oszlop + 1 < 8 && !tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
+                if (babuHelyzete.oszlop + 1 < 8 && !tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
                 {
                     LepesBeallitasJobbra(babuHelyzete, tabla, 1);
                 }
@@ -286,7 +286,11 @@
                 {
                     LepesBeallitasJobbraLe(babuHelyzete, tabla, true);
                 }
-            }
+            }           
+        }
+
+        public void FeketeParasztLepes(Mezo babuHelyzete, Tabla tabla)
+        {
             if (tabla.tabla[babuHelyzete.oszlop, babuHelyzete.sor].babuFekete)
             {
                 if (babuHelyzete.oszlop - 2 > -1 && !tabla.tabla[babuHelyzete.oszlop - 2, babuHelyzete.sor].foglalt && (babuHelyzete as LepesSzamlalo).nemLepettMeg)

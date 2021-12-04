@@ -8,13 +8,15 @@ namespace Sakk
 
     public partial class Sakk : Form
     {
-        public Tabla sakkTabla = new Tabla(8);        
+        public Tabla sakkTabla = new Tabla(8);
+        const int meret = 70;
 
+        //gombok létrehozása és felhelyezése
         public Sakk()
         { 
             InitializeComponent();
-            panel1.Width = sakkTabla.tabla.GetLength(0) * 70;
-            panel1.Height = sakkTabla.tabla.GetLength(1) * 70;
+            panel1.Width = sakkTabla.tabla.GetLength(0) * meret;
+            panel1.Height = sakkTabla.tabla.GetLength(1) * meret;
             for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
             {
                 for (int h = 0; h < sakkTabla.tabla.GetLength(1); h++)
@@ -25,44 +27,31 @@ namespace Sakk
             }
         }
 
+        //a kattintott mező kiválasztása
         private void GombNyomas(object sender, EventArgs args)
         {
             Button gomb = (Button)sender;
             Point helyzet = gomb.Location;
-            Mezo mezo = sakkTabla.tabla[helyzet.X / 70, helyzet.Y / 70];
+            Mezo mezo = sakkTabla.tabla[helyzet.X / meret, helyzet.Y / meret];
             sakkTabla.GombNyomas(mezo, gomb, panel1);
             panelModositas();
         }
-        
-        private void panelModositas()
-        {
-            //panel1.Controls.Clear();
-            const int meret = 70;
 
-            for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
-            {
-                for (int h = 0; h < sakkTabla.tabla.GetLength(0); h++)
-                {
-                    var mezo = sakkTabla.tabla[i, h];
-					if (mezo.changed)
-					{
-                        mezo.szinez();
-                        mezo.gomb.Location = new Point(i * meret, h * meret);
-                        mezo.gomb.Text = mezo.babuNeve;
-                        mezo.gomb.Height = meret;
-                        mezo.gomb.Width = meret;
-                        //mezo.gomb.Click -= GombNyomas;
-                        mezo.gomb.Click += GombNyomas;
-                        if (sakkTabla.jatekVege)
-                        {
-                            mezo.gomb.Enabled = false;
-                        }
-                        //tableLayoutPanel1.Controls.Add(mezo.gomb, i, h);
-                        panel1.Controls.Add(mezo.gomb);
-                        mezo.clearChanged();
-                    }
-                }
-            }
+        //gomb kinézetének módosítása
+        private void GombKinezetModositas(Mezo mezo,int i,int h)
+        {
+            mezo.gomb.Location = new Point(i * meret, h * meret);
+            mezo.gomb.FlatStyle = FlatStyle.Flat;
+            mezo.szinez();           
+            mezo.gomb.Text = mezo.babuNeve;
+            mezo.gomb.Height = meret;
+            mezo.gomb.Width = meret;
+            mezo.gomb.Click += GombNyomas;
+        }
+        
+        //következő játékos feltűntetése 
+        private void KovetkezoJatekos(Tabla sakkTabla)
+        {
             if (sakkTabla.kovetkezoSzin == BabuSzine.FEHER)
             {
                 label1.Text = "Fehér játékos következik";
@@ -73,6 +62,30 @@ namespace Sakk
             }
         }
 
+        //bábuk módosítása
+        private void panelModositas()
+        {
+            for (int i = 0; i < sakkTabla.tabla.GetLength(0); i++)
+            {
+                for (int h = 0; h < sakkTabla.tabla.GetLength(0); h++)
+                {
+                    var mezo = sakkTabla.tabla[i, h];
+					if (mezo.changed)
+					{
+                        GombKinezetModositas(mezo, i, h);
+                        if (sakkTabla.jatekVege)
+                        {
+                            mezo.gomb.Enabled = false;
+                        }
+                        panel1.Controls.Add(mezo.gomb);
+                        mezo.clearChanged();
+                    }
+                }
+            }
+            KovetkezoJatekos(sakkTabla);
+        }
+
+        //játék indítása
         private void button1_Click(object sender, EventArgs e)
         {
             sakkTabla = new Tabla(8);            
