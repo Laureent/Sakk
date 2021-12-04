@@ -274,7 +274,7 @@
                 {
                     LepesBeallitasJobbra(babuHelyzete, tabla, 2);
                 }
-                if (!tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
+                if (oszlop + 1 < 8 && !tabla.tabla[babuHelyzete.oszlop + 1, babuHelyzete.sor].foglalt)
                 {
                     LepesBeallitasJobbra(babuHelyzete, tabla, 1);
                 }

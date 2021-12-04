@@ -1,4 +1,5 @@
 ﻿using Sakk.Babuk;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Sakk
@@ -9,6 +10,7 @@ namespace Sakk
         private Koordinata aktivMezo { get; set; }
         public BabuSzine kovetkezoSzin { get; set; }
         public bool jatekVege { get; set; }
+        private int utesSzamlalo = 63;
 
         //tábla legenerálása
         public Tabla(int tablameret)
@@ -27,7 +29,7 @@ namespace Sakk
             }
         }
         //bábu kiválasztása vagy léptetése
-        public void GombNyomas(Mezo mezo)
+        public void GombNyomas(Mezo mezo, Button gomb = null, Panel panel = null)
         {
             if (mezo.foglalt && kovetkezoSzin == mezo.babuSzine)
             {
@@ -38,7 +40,7 @@ namespace Sakk
             else if (mezo.lepesek)
             {
                 Mezo regiMezo = tabla[aktivMezo.x, aktivMezo.y];
-                Lepes(regiMezo, mezo);
+                Lepes(regiMezo, mezo, panel, gomb);
                 if (kovetkezoSzin == BabuSzine.FEHER)
                 {
                     kovetkezoSzin = BabuSzine.FEKETE;
@@ -66,7 +68,7 @@ namespace Sakk
             return honnan.sor == 3 && honnan.oszlop == 7 && hova.sor == 5 && hova.oszlop == 7 && honnan is Kiraly;
         }
         //bábu léptetése
-        public void Lepes(Mezo honnan, Mezo hova)
+        public void Lepes(Mezo honnan, Mezo hova, Panel panel = null, Button gomb = null)
         {
             if (FeherFelfeleSancolt(honnan, hova))
             {
@@ -87,6 +89,10 @@ namespace Sakk
 
             if ((honnan.babuFekete && hova.babuFeher) || (honnan.babuFeher && hova.babuFekete))
             {
+
+                //MessageBox.Show(panel.Controls.Count + " , " + panel.Controls.IndexOf(gomb));
+                panel.Controls.RemoveAt(panel.Controls.IndexOf(gomb));
+                //utesSzamlalo++;
                 hova = new Mezo(hova.sor,hova.oszlop);
                 tabla[hova.oszlop, hova.sor] = hova;
                 int honnanSor = honnan.sor;
@@ -145,8 +151,8 @@ namespace Sakk
             {
                 for (int h = 0; h < tabla.GetLength(1); h++)
                 {
-					if (tabla[i, h].lepesek)
-					{
+                    if (tabla[i, h].lepesek)
+                    {
                         tabla[i, h].lepesek = false;
                         tabla[i, h].setChanged();
                     }
@@ -167,8 +173,8 @@ namespace Sakk
         {
             babu.LepesBeallitas(babuHelyzete, this);
         }
- 
-        public void babuGeneralasa(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+
+        public void BastyaGenerelasaBabuTipusaBastyaEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
         {
             if (babuTipusa == "Bastya")
             {
@@ -177,41 +183,65 @@ namespace Sakk
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Bástya";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
-            else if (babuTipusa == "Futo")
+        }
+        public void FutoGeneralasaBabuTipusaFutoEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+        {
+        if (babuTipusa == "Futo")
             {
                 tabla[babuHelyzeteX, babuHelyzeteY] = new Futo(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuTipus = new Futo(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Futó";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
-            else if (babuTipusa == "Kiraly")
+        }
+        public void KiralyGeneralasaBabuTipusaKiralyEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+        {
+            if (babuTipusa == "Kiraly")
             {
                 tabla[babuHelyzeteX, babuHelyzeteY] = new Kiraly(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuTipus = new Kiraly(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Király";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
-            else if (babuTipusa == "Kiralyno")
+        }
+        public void KiralynoGeneralasaBabuTipusaKiralynoEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+        {
+            if (babuTipusa == "Kiralyno")
             {
                 tabla[babuHelyzeteX, babuHelyzeteY] = new Kiralyno(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuTipus = new Kiralyno(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Királynő";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
-            else if (babuTipusa == "Lo")
+        }
+        public void LoGeneralasaBabuTipusaLoEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+        {
+            if (babuTipusa == "Lo")
             {
                 tabla[babuHelyzeteX, babuHelyzeteY] = new Lo(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuTipus = new Lo(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Ló";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
-            else if (babuTipusa == "Paraszt")
+        }
+        public void ParasztGeneralasaBabuTipusaParasztEseten(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+        {
+            if (babuTipusa == "Paraszt")
             {
                 tabla[babuHelyzeteX, babuHelyzeteY] = new Paraszt(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuTipus = new Paraszt(babuHelyzeteY, babuHelyzeteX);
                 tabla[babuHelyzeteX, babuHelyzeteY].babuNeve = "Paraszt";
                 tabla[babuHelyzeteX, babuHelyzeteY].babuSzine = szine;
             }
+        }
+        public void babuGeneralasa(string babuTipusa, BabuSzine szine, int babuHelyzeteX, int babuHelyzeteY)
+        {
+            BastyaGenerelasaBabuTipusaBastyaEseten(babuTipusa, szine, babuHelyzeteX, babuHelyzeteY);
+            FutoGeneralasaBabuTipusaFutoEseten(babuTipusa, szine, babuHelyzeteX, babuHelyzeteY);
+            LoGeneralasaBabuTipusaLoEseten(babuTipusa, szine, babuHelyzeteX, babuHelyzeteY);
+            KiralyGeneralasaBabuTipusaKiralyEseten(babuTipusa, szine, babuHelyzeteX, babuHelyzeteY);
+            KiralynoGeneralasaBabuTipusaKiralynoEseten(babuTipusa, szine, babuHelyzeteX, babuHelyzeteY);
+            ParasztGeneralasaBabuTipusaParasztEseten(babuTipusa, szine, babuHelyzeteX, babuHelyzeteY);
         }
 
         public void bastyakGeneralasa()

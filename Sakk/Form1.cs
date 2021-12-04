@@ -30,7 +30,7 @@ namespace Sakk
             Button gomb = (Button)sender;
             Point helyzet = gomb.Location;
             Mezo mezo = sakkTabla.tabla[helyzet.X / 70, helyzet.Y / 70];
-            sakkTabla.GombNyomas(mezo);
+            sakkTabla.GombNyomas(mezo, gomb, panel1);
             panelModositas();
         }
         
@@ -80,15 +80,5 @@ namespace Sakk
             sakkTabla.jatekInditasa();
             panelModositas();
         }
-
-        private void propertyGrid1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-
-		}
 	}
 }
